@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sistema Para Gestión de Proyectos</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="resources/css/style.css"/>
+
+    </h:head>
+
+    <h:body>
+
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center mb-5">
+                        <h1 class="heading-section">Sistema Para Gestión de Proyectos</h1>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="wrap d-md-flex">
+                            <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+                                <div class="text w-100">
+                                    <h2>Bienvenido a SGP</h2>
+                                    <p>Aun no tienes una cuenta?</p>
+
+                                    <p:commandButton value="Registrarse" class="btn btn-white btn-outline-white" style="border-radius: 35px"
+                                                     type="button" onclick="PF('dlg3').show()"/>
+
+                                </div>
+                            </div>
+                            <div class="login-wrap p-4 p-lg-5">
+                                <div class="d-flex">
+                                    <div class="w-100">
+                                        <h3 class="mb-4">Iniciar sesión</h3>
+                                    </div>
+                                    <div class="w-100">
+                                        <p class="social-media d-flex justify-content-end">
+                                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+                                            <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <h:form class="signin-form">
+
+
+                                    <div class="form-group mb-3">
+
+                                        <div class="p-grid ui-fluid">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+
+                                                <p:inputText id="Correo" placeholder="Correo" value="#{usuarioBean.usuarioSeleccionado.usuCorreo}" 
+                                                             validatorMessage="Formato de correo invalido" required="true">
+                                                    <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>  
+                                                </p:inputText>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group mb-3">
+
+                                        <div class="p-grid ui-fluid">
+                                            <div class="ui-inputgroup">
+                                                <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+
+                                                <p:password id="Contraseña" placeholder="Contraseña" value="#{usuarioBean.usuarioSeleccionado.usuPassword}" 
+                                                            required="true"/>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+
+                                        <p:commandButton update="messages" style="border-radius: 25px" class="form-control btn btn-primary px-3" 
+                                                         value="Ingresar" actionListener="#{usuarioBean.logIn()}"/>
+
+                                    </div>
+                                    <div class="form-group d-md-flex">
+
+                                        <div class="w-50 text-md-right">
+                                            <a href="#">Olvido la contraseña?</a>
+                                        </div>
+                                    </div>
+
+                                    <p:messages id="messages" closable="true" showIcon="true"/>
+
+                                </h:form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <p:dialog header="Crear Usuario" widgetVar="dlg3" minHeight="250" showEffect="fade">
+            <h:form id="crearUsuarioForm">
+
+                <div class="form-group mb-2">
+                    <div class="p-grid ui-fluid">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+
+                            <p:inputText id="PrimerNombre" placeholder="Primer Nombre" value="#{usuarioBean.usuarioSeleccionado.usuPrimerNombre}" 
+                                         required="true"/>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <div class="p-grid ui-fluid">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+
+                            <p:inputText id="PrimerApellido" placeholder="Primer Apellido" value="#{usuarioBean.usuarioSeleccionado.usuPrimerApellido}" 
+                                         required="true"/>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <div class="p-grid ui-fluid">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+
+                            <p:inputText id="Correo" placeholder="Correo" value="#{usuarioBean.usuarioSeleccionado.usuCorreo}" 
+                                         validatorMessage="Formato de correo invalido" required="true">
+                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>  
+                            </p:inputText>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <div class="p-grid ui-fluid">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+
+                            <p:password id="Contraseña" placeholder="Contraseña" match="Contraseña2" 
+                                        validatorMessage="Las contraseñas no coinciden" required="true"/>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-2">
+                    <div class="p-grid ui-fluid">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+
+                            <p:password id="Contraseña2" placeholder="Confirmar contraseña" value="#{usuarioBean.usuarioSeleccionado.usuPassword}" 
+                                        required="true"/>
+
+                        </div>
+                    </div>
+                </div>
+
+                <p:messages id="messages2" closable="true" showIcon="true"/>
+
+                <p:commandButton value="Crear" update="crearUsuarioForm,messages2" class="form-control btn btn-primary px-10"
+                                 style="width: 5rem; border-radius: 25px; width: 150px" actionListener="#{usuarioBean.crearUsuario()}"/>
+
+            </h:form>
+        </p:dialog>
+
+        <script src="resources/js/popper.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+        <script src="resources/js/main.js"></script>
+
+    </h:body>
+</html>

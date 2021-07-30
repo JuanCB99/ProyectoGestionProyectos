@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Error 401</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../resources/css/stylesErrorPage.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body>
+        <div id="layoutError">
+            <div id="layoutError_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h1 class="display-1">401</h1>
+
+                                    <img class="mb-4 img-error" src="../resources/images/401-error-unauthorized.png" />
+
+                                    <p class="lead">Sin autorización</p>
+                                    <p>El acceso a este recurso requiere autorización.</p>
+                                    <a href="../index.xhtml">
+                                        <i class="fas fa-arrow-left me-1"></i>
+                                        Regresar al inicio.
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <div id="layoutError_footer">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+
+                                <a href="#">Terms Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </h:body>
+</html>
