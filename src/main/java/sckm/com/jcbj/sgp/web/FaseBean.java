@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -131,6 +130,10 @@ public class FaseBean implements Serializable {
     public void listFasesByProyectoId() {
 
         this.fasesList = this.faseService.findFasesByIdProyecto(proyectoSeleccionado);
+        //Se comparten las fases del proyecto seleccionado en el desplegable para actualizar la lista desplegable
+        //de fases correspondientes a ese proyecto
+        FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().put("fasesList", this.fasesList);
 
     }
 
@@ -150,7 +153,7 @@ public class FaseBean implements Serializable {
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardado: Se asigno la fase al proyecto con exito!!", ""));
 
         } catch (Exception e) {
-            
+
             e.printStackTrace(System.out);
 
             FacesContext.getCurrentInstance().
@@ -159,24 +162,28 @@ public class FaseBean implements Serializable {
         }
 
     }
-    
-    public void editarFase(){
-        
+
+    public void editarFase() {
+
         this.faseSeleccionada.setFaseProyectoId(this.proyectoSeleccionado);
         this.faseService.updateFase(faseSeleccionada);
         this.fasesList.remove(this.faseSeleccionada);
         this.fasesList.add(this.faseSeleccionada);
         this.faseSeleccionada = null;
-        
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado: Se edito la fase con exito!!", ""));
+
     }
-    
-    public void eliminarFase(){
-        
+
+    public void eliminarFase() {
+
         System.out.println("FASE SELECCIONADA PARA ELIMINAR: " + faseSeleccionada);
         this.faseService.deleteFase(this.faseSeleccionada);
         this.fasesList.remove(this.faseSeleccionada);
         this.faseSeleccionada = null;
-        
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Eliminado: Se elimino la fase con exito!!", ""));
+
     }
 
 }

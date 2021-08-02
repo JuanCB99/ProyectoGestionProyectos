@@ -30,7 +30,7 @@ public class ProyectoBean {
     private ProyectoService proyectoService;
 
     private List<Proyectos> proyectosList;
-    
+
     private List<String> nombresProyectos;
 
     private Proyectos proyectoSeleccionado;
@@ -51,10 +51,10 @@ public class ProyectoBean {
         this.usuarioActual = (Usuarios) facesContex.getExternalContext().getSessionMap().get("usuarioRecuperado");
 
         this.proyectosList = this.proyectoService.findProyectosByIdUsuario(this.usuarioActual);
-        
+
         //prueba para compartir los proyectos del usuario actual
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("proyectosList", this.proyectosList);
-        
+
         this.proyectoSeleccionado = new Proyectos();
         System.out.println("PROYECTO INICIALIZADO: " + this.proyectoSeleccionado);
 
@@ -117,6 +117,8 @@ public class ProyectoBean {
         this.proyectoService.deleteProyecto(this.proyectoSeleccionado);
         this.proyectosList.remove(this.proyectoSeleccionado);
         this.proyectoSeleccionado = null;
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Eliminado: Se elimino el Proyecto con exito!!", ""));
 
     }
 
@@ -139,17 +141,17 @@ public class ProyectoBean {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("presupuestoTotal", sumaTotal);
 
     }
-    
-    public void extraerNombresProyectos(){
-        
+
+    public void extraerNombresProyectos() {
+
         this.nombresProyectos = new ArrayList<>();
-        
+
         for (Proyectos proyecto : this.proyectosList) {
-            
+
             this.nombresProyectos.add(proyecto.getProyectoNombre());
-            
+
         }
-        
+
     }
 
 }

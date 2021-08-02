@@ -71,7 +71,6 @@ public class UsuarioBean {
         this.usuarioSeleccionado = usuarioSeleccionado;
     }
 
-
     public void logIn() throws IOException {
 
         Usuarios usuarioRecuperado;
@@ -85,6 +84,11 @@ public class UsuarioBean {
 
         if (usuarioRecuperado != null) {
 
+            //se setean los atributos del usuario con nuevos valores sin relevacia, para proteger esos campos de cierta manera, dado que el unico atributo necesario
+            //es el Id.
+            usuarioRecuperado.setUsuPrimerNombre("usuOk");
+            usuarioRecuperado.setUsuPrimerApellido("usuOk");
+            usuarioRecuperado.setUsuPassword("usuOk");
             //Se almacena el inicio de sesión para poder mostrar la pagina en caso de que las credenciales sean correctas
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioRecuperado", usuarioRecuperado);
             //2-parte final para redireccionar a otro jsf
@@ -97,6 +101,8 @@ public class UsuarioBean {
             FacesContext.getCurrentInstance().addMessage(null, this.msg);
 
         }
+
+        System.out.println("USUARIO COMPARTIDO DESDE EL LOGIN:" + usuarioRecuperado);
 
     }
 

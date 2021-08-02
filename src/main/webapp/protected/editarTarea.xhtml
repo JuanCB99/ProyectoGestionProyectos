@@ -16,7 +16,7 @@ and open the template in the editor.
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <title>Editar Fase</title>
+        <title>Editar Tarea</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
         <!-- Custom fonts for this template-->
         <link href="../resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
@@ -343,18 +343,34 @@ and open the template in the editor.
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Escoja el proyecto para visualizar las fases.</h6>                                      
+                                    <h6 class="m-0 font-weight-bold text-primary">Escoja la fase para visualizar las tareas.</h6>                                      
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
 
-                                    <h:form id="formSelecProyec">
-                                        <p:selectOneMenu id="proyecto" value="#{faseBean.idProyecto}">
-                                            <p:ajax listener="#{faseBean.onProyectoChange}" update="faseListForm"/>
-                                            <f:selectItem itemLabel="Seleccione Proyecto" itemValue="" noSelectionOption="true"/>
-                                            <f:selectItems value="#{faseBean.proyectosListRecuperados}" var="proyectoRecuperado" 
-                                                           itemValue="#{proyectoRecuperado.proyectoId}" itemLabel="#{proyectoRecuperado.proyectoNombre}"/>
-                                        </p:selectOneMenu>
+                                    <h:form id="formSelectTarea">
+
+                                        <div class="row mr-2">
+
+                                            <p:selectOneMenu id="proyecto" value="#{faseBean.idProyecto}" class="col-md-6 mb-4 ml-2">
+                                                <p:ajax listener="#{tareaBean.onProyectoChange}" update="tareaListForm,faseCombo"/>
+                                                <f:selectItem itemLabel="Seleccione el proyecto al que pertenece la fase" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{faseBean.proyectosListRecuperados}" var="proyectoRecuperado" 
+                                                               itemValue="#{proyectoRecuperado.proyectoId}" itemLabel="#{proyectoRecuperado.proyectoNombre}"/>
+                                            </p:selectOneMenu>
+
+                                        </div>   
+                                        <div class="row mr-2">
+
+                                            <p:selectOneMenu id="faseCombo" value="#{tareaBean.idFase}" class="col-md-6 mb-4 ml-2">
+                                                <p:ajax listener="#{tareaBean.onFaseChange}" update="tareaListForm"/>
+                                                <f:selectItem itemLabel="Seleccione la fase a la que pertenece la tarea" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{tareaBean.fasesListRecuperada}" var="faseRecuperada" 
+                                                               itemValue="#{faseRecuperada.faseId}" itemLabel="#{faseRecuperada.faseNombre}"/>
+                                            </p:selectOneMenu>
+
+                                        </div> 
+
                                     </h:form>
 
                                 </div>
@@ -364,31 +380,31 @@ and open the template in the editor.
 
 
                         <!-- Area table -->
-                        <h:form id="faseListForm">
+                        <h:form id="tareaListForm">
 
                             <p:growl id="growl" showDetail="false"/> 
 
-                            <p:dataTable id="fasesDatatable" value="#{faseBean.fasesList}" var="fase">
+                            <p:dataTable id="tareasDatatable" value="#{tareaBean.tareasList}" var="tarea">
 
                                 <f:facet name="header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Listado de Fases del proyecto: #{faseBean.proyectoSeleccionado.proyectoNombre}</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado de Tareas de la Fase: #{tareaBean.faseSeleccionada.faseNombre}</h6>
                                 </f:facet>
 
                                 <p:column headerText="ID" width="17px">
-                                    <h:outputText value="#{fase.faseId}"/>
+                                    <h:outputText value="#{tarea.tareaId}"/>
                                 </p:column>
 
-                                <p:column headerText="Fase">
-                                    <h:outputText value="#{fase.faseNombre}"/>
+                                <p:column headerText="Tarea">
+                                    <h:outputText value="#{tarea.tareaNombre}"/>
                                 </p:column>
 
                                 <p:column headerText="Fecha Inicio/Fin">
 
-                                    <h:outputText value="#{fase.faseFechaInicio}">
+                                    <h:outputText value="#{tarea.tareaFechaInicio}">
                                         <f:convertDateTime/>
                                     </h:outputText>
                                     -
-                                    <h:outputText value="#{fase.faseFechaFin}">
+                                    <h:outputText value="#{tarea.tareaFechaFin}">
                                         <f:convertDateTime/>
                                     </h:outputText>
 
@@ -396,70 +412,70 @@ and open the template in the editor.
 
                                 <p:column headerText="Estado">
 
-                                    <h:outputText value="#{fase.faseEstado}"/>
+                                    <h:outputText value="#{tarea.tareaEstado}"/>
 
                                 </p:column>
 
                                 <p:column headerText="Descripción">
 
-                                    <h:outputText value="#{fase.faseDescripcion}"/>
+                                    <h:outputText value="#{tarea.tareaDescripcion}"/>
 
                                 </p:column>
 
                                 <p:column width="25px">
-                                    <p:commandButton icon="pi pi-pencil" update=":faseEditForm:manage-fase-content"
-                                                     oncomplete="PF('editarFaseDialog').show()"
+                                    <p:commandButton icon="pi pi-pencil" update=":tareaEditForm:manage-tarea-content"
+                                                     oncomplete="PF('editarTareaDialog').show()"
                                                      styleClass="edit-button rounded-button ui-button-success mb-2" process="@this">
-                                        <f:setPropertyActionListener value="#{fase}" target="#{faseBean.faseSeleccionada}"/>
-                                        <p:resetInput target=":faseEditForm:manage-fase-content"/>
+                                        <f:setPropertyActionListener value="#{tarea}" target="#{tareaBean.tareaSeleccionada}"/>
+                                        <p:resetInput target=":tareaEditForm:manage-tarea-content"/>
                                     </p:commandButton>
                                     <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
-                                                     oncomplete="PF('deleteFaseDialog').show()">
-                                        <f:setPropertyActionListener value="#{fase}" target="#{faseBean.faseSeleccionada}"/>
+                                                     oncomplete="PF('deleteTareaDialog').show()">
+                                        <f:setPropertyActionListener value="#{tarea}" target="#{tareaBean.tareaSeleccionada}"/>
                                     </p:commandButton>
                                 </p:column>
 
-
                             </p:dataTable>
 
-                            <p:confirmDialog widgetVar="deleteFaseDialog" showEffect="fade" width="300"
-                                             message="Desea borrar esta fase?" header="Confirmar" severity="warn">
-                                <p:commandButton value="Si" icon="pi pi-check" style="border-radius: 30px" actionListener="#{faseBean.eliminarFase}"
-                                                 process="@this" oncomplete="PF('deleteFaseDialog').hide()" update="faseListForm"/>
+                            <p:confirmDialog widgetVar="deleteTareaDialog" showEffect="fade" width="300"
+                                             message="Desea borrar esta tarea?" header="Confirmar" severity="warn">
+                                <p:commandButton value="Si" icon="pi pi-check" style="border-radius: 30px" actionListener="#{tareaBean.eliminarTarea}"
+                                                 process="@this" oncomplete="PF('deleteTareaDialog').hide()" update="tareaListForm"/>
                                 <p:commandButton value="No" type="button" style="border-radius: 30px" styleClass="ui-button-secondary" icon="pi pi-times"
-                                                 onclick="PF('deleteFaseDialog').hide()"/>
+                                                 onclick="PF('deleteTareaDialog').hide()"/>
                             </p:confirmDialog>
 
                         </h:form>
 
-                        <!-- Dialog for edit Fase-->
-                        <h:form id="faseEditForm">
-                            <p:dialog header="Editar Fase" showEffect="fade" modal="true"
-                                      widgetVar="editarFaseDialog" responsive="true">
-                                <p:outputPanel id="manage-fase-content" class="ui-fluid">
-                                    <p:outputPanel rendered="#{not empty faseBean.faseSeleccionada}">
+                        <!-- Dialog for edit Tarea-->
 
+                        <h:form id="tareaEditForm">
+                            <p:dialog header="Editar Tarea" showEffect="fade" modal="true"
+                                      widgetVar="editarTareaDialog" responsive="true">
+                                <p:outputPanel id="manage-tarea-content" class="ui-fluid">
+                                    <p:outputPanel rendered="#{not empty tareaBean.tareaSeleccionada}">
+                                      
                                         <div class="row">
 
-                                            <p:inputText class="mb-4 mt-2" id="FaseNombre" placeholder="Nombre de la fase" 
-                                                         value="#{faseBean.faseSeleccionada.faseNombre}" required="true"/>
+                                            <p:inputText class="mb-3" id="TareaNombre" placeholder="Nombre de la tarea" 
+                                                         value="#{tareaBean.tareaSeleccionada.tareaNombre}" required="true"/>
 
                                         </div>
                                         <div class="row">
 
-                                            <p:datePicker class="mb-4" id="FechaInicio" placeholder="Fecha de Inicio" 
-                                                          value="#{faseBean.faseSeleccionada.faseFechaInicio}" required="true"/>
+                                            <p:datePicker class="mb-3" id="FechaInicio" placeholder="Fecha de Inicio" 
+                                                          value="#{tareaBean.tareaSeleccionada.tareaFechaInicio}" required="true"/>
 
 
-                                            <p:datePicker class="mb-4" id="FechaFin" placeholder="Fecha de Finalización" 
-                                                          value="#{faseBean.faseSeleccionada.faseFechaFin}" required="true"/>
+                                            <p:datePicker class="mb-3" id="FechaFin" placeholder="Fecha de Finalización" 
+                                                          value="#{tareaBean.tareaSeleccionada.tareaFechaFin}" required="true"/>
 
                                         </div>
                                         <div class="row">
 
-                                            <p:selectOneMenu class="mb-4" id="EstadoFase" 
-                                                             value="#{faseBean.faseSeleccionada.faseEstado}" required="true">
-                                                <f:selectItem itemLabel="Estado de la fase" itemValue=""/>
+                                            <p:selectOneMenu class="mb-3" id="EstadoTarea" 
+                                                             value="#{tareaBean.tareaSeleccionada.tareaEstado}" required="true">
+                                                <f:selectItem itemLabel="Estado de la tarea" itemValue=""/>
                                                 <f:selectItem itemLabel="Pendiente de Iniciar" itemValue="Pendiente de Iniciar"/>
                                                 <f:selectItem itemLabel="Iniciado" itemValue="Iniciado"/>
                                                 <f:selectItem itemLabel="Suspendido" itemValue="Suspendido"/>
@@ -467,17 +483,27 @@ and open the template in the editor.
                                             </p:selectOneMenu>
 
 
-                                            <p:inputTextarea class="mb-4" id="DescripcionFase" placeholder="Descripción de la fase" 
-                                                             rows="5" value="#{faseBean.faseSeleccionada.faseDescripcion}" required="true"/>
+                                            <p:inputTextarea class="mb-4" id="DescripcionTarea" placeholder="Descripción de la tarea" 
+                                                             rows="5" value="#{tareaBean.tareaSeleccionada.tareaDescripcion}" required="true"/>
 
                                         </div>
                                         <div class="row">
 
-                                            <p:selectOneMenu id="proyecto" value="#{faseBean.idProyecto}" class="mb-4">
-                                                <p:ajax listener="#{faseBean.onProyectoChange}" update="formSelecProyec,faseListForm"/>
+                                            <p:selectOneMenu id="proyecto" value="#{faseBean.idProyecto}" class="mb-3">
+                                                <p:ajax listener="#{tareaBean.onProyectoChange}" update="tareaListForm,faseCombo"/>
                                                 <f:selectItem itemLabel="Seleccione el proyecto al que pertenece la fase" itemValue="" noSelectionOption="true"/>
                                                 <f:selectItems value="#{faseBean.proyectosListRecuperados}" var="proyectoRecuperado" 
                                                                itemValue="#{proyectoRecuperado.proyectoId}" itemLabel="#{proyectoRecuperado.proyectoNombre}"/>
+                                            </p:selectOneMenu>
+
+                                        </div>   
+                                        <div class="row">
+
+                                            <p:selectOneMenu id="faseCombo" value="#{tareaBean.idFase}" class="mb-3">
+                                                <p:ajax listener="#{tareaBean.onFaseChange}" update="tareaListForm"/>
+                                                <f:selectItem itemLabel="Seleccione la fase a la que pertenece la tarea" itemValue="" noSelectionOption="true"/>
+                                                <f:selectItems value="#{tareaBean.fasesListRecuperada}" var="faseRecuperada" 
+                                                               itemValue="#{faseRecuperada.faseId}" itemLabel="#{faseRecuperada.faseNombre}"/>
                                             </p:selectOneMenu>
 
                                         </div>   
@@ -485,12 +511,11 @@ and open the template in the editor.
                                 </p:outputPanel>
 
                                 <f:facet name="footer">
-                                    <p:commandButton value="Guardar" class="mt-2" style="border-radius: 30px" update="faseEditForm,:faseListForm:growl,:faseListForm:fasesDatatable" 
-                                                     icon="pi pi-save" actionListener="#{faseBean.editarFase}"/>         
-                                    <p:commandButton value="Cancelar" style="border-radius: 30px" icon="pi pi-times" onclick="PF('editarFaseDialog').hide()"
+                                    <p:commandButton value="Guardar" style="border-radius: 30px" update="tareaEditForm,:tareaListForm:growl,:tareaListForm:tareasDatatable" 
+                                                     icon="pi pi-save" actionListener="#{tareaBean.editarTarea}"/>         
+                                    <p:commandButton value="Cancelar" style="border-radius: 30px" icon="pi pi-times" onclick="PF('editarTareaDialog').hide()"
                                                      class="ui-button-danger mt-2"/>
                                 </f:facet>
-
                             </p:dialog>
                         </h:form>
 
@@ -548,8 +573,6 @@ and open the template in the editor.
 
         <!-- Custom scripts for all pages-->
         <script src="../resources/js/sb-admin-2.min.js"></script>
-
-
 
     </h:body>
 </html>

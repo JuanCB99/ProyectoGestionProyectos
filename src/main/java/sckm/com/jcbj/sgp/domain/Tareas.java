@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tareas.findAll", query = "SELECT t FROM Tareas t"),
+    @NamedQuery(name = "Tareas.findTareasByIdFase", query = "SELECT t FROM Tareas t WHERE t.tareaFaseId = :tareaFaseId"),
     @NamedQuery(name = "Tareas.findByTareaId", query = "SELECT t FROM Tareas t WHERE t.tareaId = :tareaId"),
     @NamedQuery(name = "Tareas.findByTareaNombre", query = "SELECT t FROM Tareas t WHERE t.tareaNombre = :tareaNombre"),
     @NamedQuery(name = "Tareas.findByTareaFechaInicio", query = "SELECT t FROM Tareas t WHERE t.tareaFechaInicio = :tareaFechaInicio"),
@@ -53,9 +54,9 @@ public class Tareas implements Serializable {
     private Integer tareaId;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "tarea_nombre")
-    @Temporal(TemporalType.DATE)
-    private Date tareaNombre;
+    private String tareaNombre;
     @Basic(optional = false)
     @NotNull
     @Column(name = "tarea_fecha_inicio")
@@ -63,9 +64,9 @@ public class Tareas implements Serializable {
     private Date tareaFechaInicio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "tarea_fecha_fin")
-    private String tareaFechaFin;
+    @Temporal(TemporalType.DATE)
+    private Date tareaFechaFin;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -79,6 +80,8 @@ public class Tareas implements Serializable {
     @JoinColumn(name = "tarea_fase_id", referencedColumnName = "fase_id")
     @ManyToOne(optional = false)
     private Fases tareaFaseId;
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gastoTareaId")
     private Collection<Gastos> gastosCollection;
 
@@ -89,7 +92,7 @@ public class Tareas implements Serializable {
         this.tareaId = tareaId;
     }
 
-    public Tareas(Integer tareaId, Date tareaNombre, Date tareaFechaInicio, String tareaFechaFin, String tareaEstado, String tareaDescripcion) {
+    public Tareas(Integer tareaId, String tareaNombre, Date tareaFechaInicio, Date tareaFechaFin, String tareaEstado, String tareaDescripcion) {
         this.tareaId = tareaId;
         this.tareaNombre = tareaNombre;
         this.tareaFechaInicio = tareaFechaInicio;
@@ -106,11 +109,11 @@ public class Tareas implements Serializable {
         this.tareaId = tareaId;
     }
 
-    public Date getTareaNombre() {
+    public String getTareaNombre() {
         return tareaNombre;
     }
 
-    public void setTareaNombre(Date tareaNombre) {
+    public void setTareaNombre(String tareaNombre) {
         this.tareaNombre = tareaNombre;
     }
 
@@ -122,11 +125,11 @@ public class Tareas implements Serializable {
         this.tareaFechaInicio = tareaFechaInicio;
     }
 
-    public String getTareaFechaFin() {
+    public Date getTareaFechaFin() {
         return tareaFechaFin;
     }
 
-    public void setTareaFechaFin(String tareaFechaFin) {
+    public void setTareaFechaFin(Date tareaFechaFin) {
         this.tareaFechaFin = tareaFechaFin;
     }
 
@@ -185,7 +188,7 @@ public class Tareas implements Serializable {
 
     @Override
     public String toString() {
-        return "sckm.com.jcbj.sgp.domain.Tareas[ tareaId=" + tareaId + " ]";
+        return "Tareas{" + "tareaId=" + tareaId + ", tareaNombre=" + tareaNombre + ", tareaFechaInicio=" + tareaFechaInicio + ", tareaFechaFin=" + tareaFechaFin + ", tareaEstado=" + tareaEstado + ", tareaDescripcion=" + tareaDescripcion + ", tareaFaseId=" + tareaFaseId.getFaseId() + '}';
     }
     
 }
