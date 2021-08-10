@@ -108,11 +108,20 @@ and open the template in the editor.
                     </div>
                 </li>
 
-                <!-- Nav Item - Charts -->
+                <!-- Nav Item - Gastos -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGastos"
+                       aria-expanded="true" aria-controls="collapseGastos">
                         <i class="fas fa-money-bill-wave"></i>
-                        <span>Agregar Gastos</span></a>
+                        <span>Gestionar Gastos</span>
+                    </a>
+                    <div id="collapseGastos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones:</h6>
+                            <a class="collapse-item" href="agregarGasto.xhtml">Nuevo Gasto</a>
+                            <a class="collapse-item" href="editarGasto.xhtml">Editar Gasto</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Sidebar Toggler (Sidebar) -->

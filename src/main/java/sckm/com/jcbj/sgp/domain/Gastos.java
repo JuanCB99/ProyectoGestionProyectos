@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Gastos.findAll", query = "SELECT g FROM Gastos g"),
+    @NamedQuery(name = "Gastos.findGastosByIdTarea", query = "SELECT g FROM Gastos g WHERE g.gastoTareaId = :gastoTareaId"),
     @NamedQuery(name = "Gastos.findByGastoId", query = "SELECT g FROM Gastos g WHERE g.gastoId = :gastoId"),
     @NamedQuery(name = "Gastos.findByGastoConcepto", query = "SELECT g FROM Gastos g WHERE g.gastoConcepto = :gastoConcepto"),
     @NamedQuery(name = "Gastos.findByGastoFecha", query = "SELECT g FROM Gastos g WHERE g.gastoFecha = :gastoFecha"),
@@ -59,6 +60,11 @@ public class Gastos implements Serializable {
     private Date gastoFecha;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "gasto_descripcion")
+    private String gastoDescripcion;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "gasto_cantidad_prod")
     private int gastoCantidadProd;
     @Basic(optional = false)
@@ -69,6 +75,9 @@ public class Gastos implements Serializable {
     @NotNull
     @Column(name = "gasto_precio_total")
     private double gastoPrecioTotal;
+    @Size(min = 1, max = 100)
+    @Column(name = "gasto_imagen")
+    private String gastoImagen;
     @JoinColumn(name = "gasto_tarea_id", referencedColumnName = "tarea_id")
     @ManyToOne(optional = false)
     private Tareas gastoTareaId;
@@ -80,13 +89,15 @@ public class Gastos implements Serializable {
         this.gastoId = gastoId;
     }
 
-    public Gastos(Integer gastoId, String gastoConcepto, Date gastoFecha, int gastoCantidadProd, double gastoPrecioProd, double gastoPrecioTotal) {
+    public Gastos(Integer gastoId, String gastoConcepto, Date gastoFecha, String gastoDescripcion, int gastoCantidadProd, double gastoPrecioProd, double gastoPrecioTotal, String gastoImagen) {
         this.gastoId = gastoId;
         this.gastoConcepto = gastoConcepto;
         this.gastoFecha = gastoFecha;
+        this.gastoDescripcion = gastoDescripcion;
         this.gastoCantidadProd = gastoCantidadProd;
         this.gastoPrecioProd = gastoPrecioProd;
         this.gastoPrecioTotal = gastoPrecioTotal;
+        this.gastoImagen = gastoImagen;
     }
 
     public Integer getGastoId() {
@@ -113,6 +124,14 @@ public class Gastos implements Serializable {
         this.gastoFecha = gastoFecha;
     }
 
+    public String getGastoDescripcion() {
+        return gastoDescripcion;
+    }
+
+    public void setGastoDescripcion(String gastoDescripcion) {
+        this.gastoDescripcion = gastoDescripcion;
+    }
+
     public int getGastoCantidadProd() {
         return gastoCantidadProd;
     }
@@ -135,6 +154,14 @@ public class Gastos implements Serializable {
 
     public void setGastoPrecioTotal(double gastoPrecioTotal) {
         this.gastoPrecioTotal = gastoPrecioTotal;
+    }
+
+    public String getGastoImagen() {
+        return gastoImagen;
+    }
+
+    public void setGastoImagen(String gastoImagen) {
+        this.gastoImagen = gastoImagen;
     }
 
     public Tareas getGastoTareaId() {
@@ -169,5 +196,5 @@ public class Gastos implements Serializable {
     public String toString() {
         return "sckm.com.jcbj.sgp.domain.Gastos[ gastoId=" + gastoId + " ]";
     }
-    
+
 }

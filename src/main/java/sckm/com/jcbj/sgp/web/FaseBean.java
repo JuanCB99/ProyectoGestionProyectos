@@ -147,7 +147,7 @@ public class FaseBean implements Serializable {
             System.out.println("FASE ENVIADA PARA GUARDAR: " + this.faseSeleccionada);
             this.faseService.insertFase(faseSeleccionada);
             this.fasesList.add(this.faseSeleccionada);
-            this.faseSeleccionada = null;
+            this.faseSeleccionada = new Fases();
             //Se manda un mensaje para notificar al usuario que la fase se asigno con exito
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardado: Se asigno la fase al proyecto con exito!!", ""));

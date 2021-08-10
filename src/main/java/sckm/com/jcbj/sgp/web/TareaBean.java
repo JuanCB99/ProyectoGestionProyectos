@@ -143,6 +143,8 @@ public class TareaBean implements Serializable {
     public void listTareasByFaseId() {
 
         this.tareasList = this.tareaService.findTareasByIdFase(faseSeleccionada);
+                FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().put("tareasList", this.tareasList);
 
     }
 
@@ -154,7 +156,7 @@ public class TareaBean implements Serializable {
             System.out.println("TAREA PARA GUARDAR: " + this.tareaSeleccionada);
             this.tareaService.insertTarea(tareaSeleccionada);
             this.tareasList.add(this.tareaSeleccionada);
-            this.tareaSeleccionada = null;
+            this.tareaSeleccionada = new Tareas();
             //Se manda un mensaje para notificar al usuario que la tarea se asigno con exito
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Guardado: Se asigno la tarea a la fase con exito!!", ""));
